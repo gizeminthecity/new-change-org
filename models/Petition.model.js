@@ -10,7 +10,7 @@ const petitionSchema = new Schema({
     subject: {
         type: String,
         min: 10,
-        // max: 150,
+        max: 200,
         required: true,
     },
     description: {
