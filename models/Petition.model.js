@@ -1,6 +1,4 @@
-const mongoose = require("mongoose");
-
-const { Schema, model } = mongoose;
+const { Schema, model } = require("mongoose");
 
 const petitionSchema = new Schema({
     name: {
@@ -33,6 +31,11 @@ const petitionSchema = new Schema({
     picture: {
         type: String,
         default: "",
+    },
+    slug: {
+        type: String,
+        required: true,
+        unique: true,
     },
 });
 
