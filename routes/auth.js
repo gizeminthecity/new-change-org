@@ -19,7 +19,7 @@ router.get("/signup", shouldNotBeLoggedIn, (req, res) => {
 });
 
 router.post("/signup", shouldNotBeLoggedIn, (req, res) => {
-  const { username, password } = req.body;
+  const { name, email, username, password } = req.body;
 
   if (!username) {
     return res
