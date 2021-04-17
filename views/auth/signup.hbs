@@ -1,9 +1,9 @@
 <form action="/auth/signup" method="POST">
    <h1>Sign Up for New Change Org</h1>
-   <input type="text" name="First Name" placeholder="First Name" required>
+   <input type="text" name="name" placeholder="First Name" required>
 
    <br>
-   <input type="text" name="Email" placeholder="Email" required>
+   <input type="text" name="email" placeholder="Email" required>
 
    <br>
 
@@ -13,7 +13,10 @@
 
    <input type="password" name="password" placeholder="password" required min="8">
    <br>
-</form>
-<form action="/">
    <button type="submit">Create Profile</button>
+
 </form>
+
+{{#if errorMessage}}
+<p>{{errorMessage}}</p>
+{{/if}}

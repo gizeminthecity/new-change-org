@@ -20,9 +20,18 @@ require("./config")(app);
 
 const projectName = "new-change-org";
 const capitalized = (string) =>
-    string[0].toUpperCase() + string.slice(1).toLowerCase();
+  string[0].toUpperCase() + string.slice(1).toLowerCase();
 
 app.locals.title = `${capitalized(projectName)}`;
+
+app.use((req, res, next) => {
+  if (req.session.user) {
+    // if there is a logged in user
+    res.locals.user = req.session.user;
+    // in every response we are sending a `user` which is the logged in user
+  }
+  next();
+});
 
 // 👇 Start handling routes here
 const index = require("./routes/index");
