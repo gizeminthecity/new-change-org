@@ -1,3 +1,7 @@
+{{#if user}}
+{{!-- ANYTHING THAT USER IS LOGGED IN --}}
+SHOW SOMETHING
+{{else}}
 <h1>{{title}}</h1>
 
 <p>New Change.Org</p>
@@ -7,4 +11,6 @@
   <button type="submit">Search</button>
   <a href="/petitions/all">All Petitions</a>
 </form>
-<button type="login"> Login</button><button type="signup">Sign Up</button>
+<button type="submit"> <a href="/auth/login">Login</a></button>
+<button type="submit"><a href="/auth/signup">Sign Up</a></button>
+{{/if}}
