@@ -9,6 +9,6 @@ router.get("/", (req, res) => {
         console.log("allPetitions: ", allPetitions[0]);
         res.render("petitions", { petitionList: allPetitions });
     });
-  });
 });
+
 module.exports = router;
