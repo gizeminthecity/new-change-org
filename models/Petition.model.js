@@ -1,7 +1,7 @@
-const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
 const SUBJECT_ENUM = require("../utils/consts");
 
-const petitionSchema = new Schema({
+const petitionSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -17,12 +17,12 @@ const petitionSchema = new Schema({
         min: 30,
     },
     deadline: Date,
-    signatures: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    signatures: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     location: {
         type: String,
     },
     owner: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },
     signatureTarget: {
@@ -34,11 +34,11 @@ const petitionSchema = new Schema({
     },
     slug: {
         type: String,
-        required: true,
+        // required: true,
         unique: true,
     },
 });
 
-const Petition = model("Petition", petitionSchema);
+const Petition = mongoose.model("Petition", petitionSchema);
 
 module.exports = Petition;

@@ -1,12 +1,10 @@
 const router = require("express").Router();
-
+const SUBJECT_ENUM = require("../utils/consts");
 const isLoggedIn = require("../middlewares/isLoggedIn");
+const Petition = require("../models/Petition.model");
+const User = require("../models/User.model");
 
 // const parser = require("../config/cloudinary");
-
-const Petition = require("../models/Petition.model");
-
-const User = require("../models/User.model");
 
 router.get("/", (req, res) => {
     Petition.find().then((allPetitions) => {
@@ -23,7 +21,10 @@ router.get("/", (req, res) => {
 });
 
 router.get("/start-petition", isLoggedIn, (req, res) => {
-    res.render("start-petition", { user: req.session.user });
+    res.render("start-petition", {
+        subjects: SUBJECT_ENUM,
+        user: req.session.user,
+    });
 });
 
 router.post("/start-petition", isLoggedIn, (req, res) => {
@@ -51,14 +52,14 @@ router.post("/start-petition", isLoggedIn, (req, res) => {
         description,
         deadline,
         location,
-        owner: req.session.user._id,
         signatureTarget,
-        // image,
-        // signatures: [req.session.user._id],
+        owner: req.session.user._id,
+        signatures: [req.session.user._id],
+        image,
     })
         .then((createdPetition) => {
             console.log("createdPetition: ", createdPetition);
-            // res.redirect(`/petitions/${createdOrganization._id}`);
+            res.redirect(`/petitions/${createdPetition._id}`);
         })
         .catch((err) => {
             console.log(err);
