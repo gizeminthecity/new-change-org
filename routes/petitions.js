@@ -13,16 +13,18 @@ router.get("/my-petitions", isLoggedIn, (req, res) => {
                 { owner: { $ne: req.session.user._id } },
                 { signatures: { $in: req.session.user._id } },
             ],
-        }).then((signedPetitions) => {
-            console.log("owner: ", myPetitions);
-            console.log("signedPetitions: ", signedPetitions);
-            res.render("my-petitions", {
-                owner: myPetitions,
-                signatures: signedPetitions,
-            }).catch((err) => {
+        })
+            .then((signedPetitions) => {
+                console.log("owner: ", myPetitions);
+                console.log("signedPetitions: ", signedPetitions);
+                res.render("my-petitions", {
+                    owner: myPetitions,
+                    signatures: signedPetitions,
+                });
+            })
+            .catch((err) => {
                 console.log(err);
             });
-        });
     });
 });
 
