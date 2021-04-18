@@ -1,16 +1,18 @@
 {{#if user}}
 {{!-- ANYTHING THAT USER IS LOGGED IN --}}
 SHOW SOMETHING
-{{else}}
+{{!-- {{else}} --}}
 <h1>{{title}}</h1>
 
 <p>New Change.Org</p>
 
+
 <form action="/petitions">
   <input name="petitions" placeholder="Search for Petitions">
   <button type="submit">Search</button>
-  <a href="/petitions/all">All Petitions</a>
+  <a href="/petitions">All Petitions</a>
 </form>
+
 <button type="submit"> <a href="/auth/login">Login</a></button>
 <button type="submit"><a href="/auth/signup">Sign Up</a></button>
 {{/if}}
