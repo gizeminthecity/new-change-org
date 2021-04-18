@@ -63,8 +63,19 @@ router.post("/start-petition", isLoggedIn, (req, res) => {
         })
         .catch((err) => {
             console.log(err);
-            // res.render("start-petition", errorMessage);
+            res.render("start-petition", {
+                errorMessage: "Something went wrong",
+            });
         });
+});
+
+router.get("/:_id", (req, res) => {
+    Petition.findById(req.params._id).then((foundPetition) => {
+        if (!foundPetition) {
+            return res.redirect(`/`);
+        }
+        res.render("single-petition", { petition: foundPetition });
+    });
 });
 
 module.exports = router;
