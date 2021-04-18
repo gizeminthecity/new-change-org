@@ -1,10 +1,12 @@
 <h1>The Most Important Petiton</h1>
 
 {{#each petitionList}}
-    <p>{{this.name}}</p>
+    <a href="/petitions/{{this._id}}"><p>{{this.name}}</p></a>
 {{/each}}
 
 <a href="/petitions/start-petition">Start a Petition</a>
+
+
 
 {{#if errorMessage}}
   <h5>{{errorMessage}}</h5>

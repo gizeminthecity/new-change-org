@@ -70,11 +70,34 @@ router.post("/start-petition", isLoggedIn, (req, res) => {
 });
 
 router.get("/:_id", (req, res) => {
-    Petition.findById(req.params._id).then((foundPetition) => {
-        if (!foundPetition) {
-            return res.redirect(`/`);
-        }
-        res.render("single-petition", { petition: foundPetition });
+    Petition.findById(req.params._id)
+        .populate("owner")
+        .populate("signatures")
+        .then((foundPetition) => {
+            if (!foundPetition) {
+                return res.redirect(`/`);
+            }
+            res.render("single-petition", { petition: foundPetition });
+        });
+});
+
+router.get("/my-petitions", isLoggedIn, (req, res) => {
+    Petition.find({ owner: req.session.user._id }).then((myPetitions) => {
+        Petition.find({
+            $and: [
+                { owner: { $ne: req.session.user._id } },
+                { signatures: { $in: req.session.user._id } },
+            ],
+        }).then((signedPetitions) => {
+            console.log("owner: ", myPetitions);
+            console.log("signedPetitions: ", signedPetitions);
+            res.render("my-petitions", {
+                owner: myPetitions,
+                signatures: signedPetitions,
+            }).catch((err) => {
+                console.log(err);
+            });
+        });
     });
 });
 

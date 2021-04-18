@@ -1,0 +1,24 @@
+<h1>My Petitions</h1>
+
+
+
+{{#unless owner}}
+Please start a <a href="/petitions/start-petition"> new petition</a>
+{{/unless}}
+
+{{#if owner}}
+{{#each owner}}
+
+<a href="/petitions/{{this._id}}">{{this.name}}</a>
+{{/each }}
+{{/if}}
+<br>
+<h2>Petitions Signed</h2>
+
+
+{{#if member}}
+{{#each member}}
+
+<a href="/petitions/{{this._id}}">{{this.name}}</a>
+{{/each }}
+{{/if}}
