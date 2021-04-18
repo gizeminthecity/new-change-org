@@ -6,6 +6,26 @@ const User = require("../models/User.model");
 
 // const parser = require("../config/cloudinary");
 
+router.get("/my-petitions", isLoggedIn, (req, res) => {
+    Petition.find({ owner: req.session.user._id }).then((myPetitions) => {
+        Petition.find({
+            $and: [
+                { owner: { $ne: req.session.user._id } },
+                { signatures: { $in: req.session.user._id } },
+            ],
+        }).then((signedPetitions) => {
+            console.log("owner: ", myPetitions);
+            console.log("signedPetitions: ", signedPetitions);
+            res.render("my-petitions", {
+                owner: myPetitions,
+                signatures: signedPetitions,
+            }).catch((err) => {
+                console.log(err);
+            });
+        });
+    });
+});
+
 router.get("/", (req, res) => {
     Petition.find().then((allPetitions) => {
         console.log("allPetitions", allPetitions);
@@ -79,26 +99,6 @@ router.get("/:_id", (req, res) => {
             }
             res.render("single-petition", { petition: foundPetition });
         });
-});
-
-router.get("/my-petitions", isLoggedIn, (req, res) => {
-    Petition.find({ owner: req.session.user._id }).then((myPetitions) => {
-        Petition.find({
-            $and: [
-                { owner: { $ne: req.session.user._id } },
-                { signatures: { $in: req.session.user._id } },
-            ],
-        }).then((signedPetitions) => {
-            console.log("owner: ", myPetitions);
-            console.log("signedPetitions: ", signedPetitions);
-            res.render("my-petitions", {
-                owner: myPetitions,
-                signatures: signedPetitions,
-            }).catch((err) => {
-                console.log(err);
-            });
-        });
-    });
 });
 
 module.exports = router;

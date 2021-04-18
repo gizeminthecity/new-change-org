@@ -22,3 +22,7 @@ Please start a <a href="/petitions/start-petition"> new petition</a>
 <a href="/petitions/{{this._id}}">{{this.name}}</a>
 {{/each }}
 {{/if}}
+
+{{#if errorMessage}}
+  <h5>{{errorMessage}}</h5>
+{{/if}}

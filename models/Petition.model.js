@@ -32,11 +32,11 @@ const petitionSchema = new mongoose.Schema({
         type: String,
         default: "",
     },
-    slug: {
-        type: String,
-        // required: true,
-        unique: true,
-    },
+    // slug: {
+    //     type: String,
+    //     // required: true,
+    //     unique: true,
+    // },
 });
 
 const Petition = mongoose.model("Petition", petitionSchema);
