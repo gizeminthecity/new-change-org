@@ -1,22 +1,5 @@
-{{#unless owner}}
-  {{#with petition}}
-  <h3>{{this.name}}</h3>
-  <h2>{{this.description}}</h2>
-  <form action="" method="post">
-    <button type="submit">SIGN</button>
-  </form>
-  <br>
-  {{/with}}
- {{#each updateList}}
-  <h1>{{this.title}}</h1>
-  <h2>{{this.description}}</h2>
-  {{/each}}
-{{/unless}}
+<p>Update Petition</p>
 
- 
-
-
-{{#if isOwner}}
 <form action="/petitions/{{petition._id}}" method="POST">
 <label for="title">Title: </label>
 <input type="text" name="title" id="title" placeholder="write here">
@@ -29,13 +12,3 @@
  
   <br>
   <a href="/petitions/{{petitions._id}}/delete">Delete Petition</a>
-
-{{/if}}
-
-
-
-
-{{#if errorMessage}}
-  <h5>{{errorMessage}}</h5>
-{{/if}}
-

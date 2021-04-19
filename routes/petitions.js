@@ -3,6 +3,7 @@ const SUBJECT_ENUM = require("../utils/consts");
 const isLoggedIn = require("../middlewares/isLoggedIn");
 const Petition = require("../models/Petition.model");
 const User = require("../models/User.model");
+const UpdatePetition = require("../models/UpdatePetition.model");
 
 // const parser = require("../config/cloudinary");
 
@@ -81,7 +82,7 @@ router.post("/start-petition", isLoggedIn, (req, res) => {
     })
         .then((createdPetition) => {
             console.log("createdPetition: ", createdPetition);
-            res.redirect(`/petitions/${createdPetition._id}`);
+            // res.redirect(`/petitions/${createdPetition._id}`);
         })
         .catch((err) => {
             console.log(err);
@@ -91,15 +92,66 @@ router.post("/start-petition", isLoggedIn, (req, res) => {
         });
 });
 
-router.get("/:_id", (req, res) => {
-    Petition.findById(req.params._id)
-        .populate("owner")
-        .populate("signatures")
-        .then((foundPetition) => {
+router.get("/:_id", isLoggedIn, (req, res) => {
+    Promise.all([
+        UpdatePetition.find({ parent: req.params._id }), // 0
+        Petition.findById(req.params._id) // 1
+            .populate("owner")
+            .populate("signatures"),
+    ])
+        .then((results) => {
+            const allUpdates = results[0];
+            console.log("allUpdates:", allUpdates);
+            const foundPetition = results[1];
             if (!foundPetition) {
                 return res.redirect(`/`);
             }
-            res.render("single-petition", { petition: foundPetition });
+            let isOwner = false;
+            if (req.session.user) {
+                if (
+                    foundPetition.owner.username === req.session.user.username
+                ) {
+                    isOwner = true;
+                }
+            }
+            res.render("single-petition", {
+                petition: foundPetition,
+                isOwner,
+                updateList: allUpdates,
+            });
+        })
+        .catch((err) => {
+            res.redirect("/");
+        });
+});
+
+router.post("/:_id", isLoggedIn, (req, res) => {
+    console.log("HELLO: ", req);
+    const { title, description, image } = req.body;
+
+    UpdatePetition.create({
+        title,
+        description,
+        image,
+        parent: req.params._id,
+    })
+        .then((createdUpdate) => {
+            console.log("createdUpdate: ", createdUpdate);
+            res.redirect(`/petitions/${req.params._id}`);
+        })
+        .catch((err) => {
+            console.log(err.message);
+            res.render("single-petition", {
+                errorMessage: "Something went wrong",
+            });
+        });
+});
+
+router.get("/:_id/delete", isLoggedIn, (req, res) => {
+    Petition.findById(req.param._id)
+        .populate("owner")
+        .then((petition) => {
+            console.log("petition: ", petition);
         });
 });
 
