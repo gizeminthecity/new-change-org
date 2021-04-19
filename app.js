@@ -42,9 +42,6 @@ app.use("/auth", authRoutes);
 const petitionRoutes = require("./routes/petitions");
 app.use("/petitions", petitionRoutes);
 
-const updatePetitionRoutes = require("./routes/updatePetition");
-app.use("/updatePetition", updatePetitionRoutes);
-
 const profileRoutes = require("./routes/profile");
 app.use("/profile", profileRoutes);
 

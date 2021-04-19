@@ -2,14 +2,14 @@
   {{#with petition}}
   <h3>{{this.name}}</h3>
   <h2>{{this.description}}</h2>
-  <form action="" method="post">
+  <form action="" method="POST">
     <button type="submit">SIGN</button>
   </form>
   <br>
   {{/with}}
  {{#each updateList}}
-  <h1>{{this.title}}</h1>
-  <h2>{{this.description}}</h2>
+  <p>{{this.title}}</p>
+  <p>{{this.description}}</p>
   {{/each}}
 {{/unless}}
 
@@ -29,6 +29,7 @@
  
   <br>
   <a href="/petitions/{{petitions._id}}/delete">Delete Petition</a>
+  
 
 {{/if}}
 

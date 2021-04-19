@@ -126,7 +126,7 @@ router.get("/:_id", isLoggedIn, (req, res) => {
 });
 
 router.post("/:_id", isLoggedIn, (req, res) => {
-    console.log("HELLO: ", req);
+    // console.log("HELLO: ", req);
     const { title, description, image } = req.body;
 
     UpdatePetition.create({
@@ -150,9 +150,16 @@ router.post("/:_id", isLoggedIn, (req, res) => {
 router.get("/:_id/delete", isLoggedIn, (req, res) => {
     Petition.findById(req.param._id)
         .populate("owner")
-        .then((petition) => {
-            console.log("petition: ", petition);
+        .then((foundPetition) => {
+            console.log("foundPtition: ", foundPetition);
+            if (!petition) {
+                return res.redirect(`/`);
+            }
         });
+
+    Petition.findByIdAndDelete(foundPetition._id).then(() => {
+        res.redirect("/my-petitions");
+    });
 });
 
 module.exports = router;
