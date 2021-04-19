@@ -12,7 +12,11 @@
 <body>
    <nav>
       {{#if user}}
-      Welcome back, {{user.name}}
+      <nav>
+         <button type="submit"><a href=" /profile">Your Profile </a></button>
+      </nav>
+      <br>
+      {{user.name}}, are you ready to make a difference?
 
       {{else}}
       Welcome. Please signn in
