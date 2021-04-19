@@ -5,7 +5,6 @@ const updatePetitionSchema = new mongoose.Schema({
         type: String,
     },
     date: Date,
-
     title: {
         type: String,
         required: true,
@@ -17,10 +16,12 @@ const updatePetitionSchema = new mongoose.Schema({
         required: true,
         min: 50,
     },
+    parent: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Petition",
+    },
 });
 
-const updatePetition = mongoose.model("updatePetition", updatePetitionSchema);
+const UpdatePetition = mongoose.model("UpdatePetition", updatePetitionSchema);
 
-module.exports = updatePetition;
-
-//test test test
+module.exports = UpdatePetition;
