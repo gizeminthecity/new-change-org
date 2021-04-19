@@ -1,0 +1,45 @@
+<h1>Start a petition </h1>
+
+{{#with user}}
+
+<form action="/petitions/start-petition" method="POST">
+    <label for="petitionTitle">Write your petition title: </label>
+    <input type="text" name="name" placeholder="...">
+<br>
+
+    <label for="subject">What kind of issue are you petitioning on?</label>
+
+    <select name="subject" id="subject">
+        {{#each subjects}}
+        <option value="{{this}}">{{this}}</option>
+        {{/each}}
+    </select>
+<br>
+<br>
+    <label for="problem">Explain the problem you want to solve</label>
+    <input type="text" name="description" id="problem" min="30" placeholder="Explain the problem you want to solve">
+<br>
+
+    <label for="deadline">Deadline: </label>
+    <input type="datetime-local" name="deadline" id="deadline">
+
+<br>
+    <label for="location">Location: </label>
+    <input type="text" name="location" nameplaceholder="Location">
+<br>
+    <label for="signatureTarget">What is your signature target? </label>
+    <input type="number" name="signatureTarget" id="signatureTarget" min="0" placeholder="Enter number">
+
+<br>
+    <label for="image">Please upload a photo: </label>
+    <input type="file" id="image" name="image">
+<br>
+    <button type="submit">Start a petition</button>
+<br>
+</form>
+
+{{/with}}
+
+{{#if errorMessage}}
+  <h5>{{errorMessage}}</h5>
+{{/if}}

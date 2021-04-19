@@ -12,15 +12,20 @@
 <body>
    <nav>
       {{#if user}}
-      <nav>
-         <button type="submit"><a href=" /profile">Your Profile </a></button>
-      </nav>
-      <br>
-      {{user.name}}, are you ready to make a difference?
 
+      Welcome back, {{user.name}}
+      <br>
+      <a href="/profile">Go to profile</a>
+      <br>
+      <nav class="navbar" style="background-color: black">
+         <a href="/">Home</a>
+         <a href="/petitions/my-petitions">My Petitions</a>
+         <a href="/auth/logout">Logout</a>
+      </nav>
       {{else}}
-      Welcome. Please signn in
+      Welcome. Please sign in
       <div>
+         <a href="/">Home</a>
          <a href="/auth/signup">Signup</a>
          <a href="/auth/login">Login</a>
 

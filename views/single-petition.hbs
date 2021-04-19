@@ -1,0 +1,22 @@
+{{!-- {{#if }}
+{{#with petition}}
+<h1>{{this.name}}</h1>
+<img src="{{this.image}}" alt="this.name">
+<p> {{this.description}} </p>
+{{/with}}
+
+{{else}}
+
+<p> We couldn't find the petition that you are looking for. You can start a new petition.
+        <a href="/start-petition">here</a>
+</p>
+{{/if}} --}}
+
+{{#with petition}}
+<h3>{{this.name}}</h3>
+<h2>{{this.description}}</h2>
+{{/with}}
+
+{{#if errorMessage}}
+  <h5>{{errorMessage}}</h5>
+{{/if}}
