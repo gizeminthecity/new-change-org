@@ -8,7 +8,7 @@ const petitionSchema = new mongoose.Schema({
     },
     subject: {
         type: String,
-        // required: true,
+        required: true,
         enum: SUBJECT_ENUM,
     },
     description: {

@@ -179,4 +179,45 @@ router.get("/:_id/delete", isLoggedIn, (req, res) => {
         });
 });
 
+router.get(":_id/sign", isLoggedIn, (req, res) => {
+    Petition.findById(req.params._id).populate("signatures"),
+        then((signedPetition) => {
+            if (!signedPetition) {
+                return res.redirect("/");
+            }
+
+            const isAlreadySigned = signedPetition.signatures.find(
+                (user) => user.username === req.session.user.username
+            );
+
+            if (isAlreadySigned) {
+                return res.redirect(`/petitions/${signedPetition._id}`);
+            }
+
+            if (
+                signedPetition.signatures.length >=
+                signedPetition.signatureTarget
+            ) {
+                return res.redirect(`/petitions/${signedPetition._id}`);
+            }
+
+            Petition.findByIdAndUpdate(
+                signedPetition._id,
+                {
+                    $addToSet: { signatures: req.session.user._id },
+                },
+                { new: true }
+            ).then((updatedPetition) => {
+                console.log("updatedPetition: ", updatedPetition);
+                return res.render("my-petitions", {
+                    signedPetition,
+                    updatedPetition,
+                    isAlreadySigned,
+                });
+            });
+        }).catch((err) => {
+            console.log(err);
+        });
+});
+
 module.exports = router;
