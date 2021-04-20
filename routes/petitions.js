@@ -189,7 +189,21 @@ router.get("/:_id/sign", isLoggedIn, (req, res) => {
         { new: true }
     )
         .then((returnedPetition) => {
+            if (!returnedPetition) {
+                return res.redirect("/");
+            }
+            const isAlreadySigned = returnedPetition.signatures.find(
+                (user) => user.username === req.session.user.username
+            );
+            if (isAlreadySigned) {
+                return res.render(`/petitions/${returnedPetition._id}`);
+            }
             console.log("LOOK HERE", returnedPetition);
+
+            return res.render("my-petitions", {
+                returnedPetition,
+                isAlreadySigned,
+            });
         })
         .catch((err) => console.log(err));
 
