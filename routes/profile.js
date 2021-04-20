@@ -20,4 +20,21 @@ router.post("/edit", isLoggedMiddleware, (req, res) => {
       res.redirect("/profile");
     });
 });
+
+//router.get("/delete", isLoggedMiddleware, (req, res) => {
+//User.findByIdAndDelete(req.session.user._id).then(() => {
+// return res.redirect("/");
+//});
+//});
+
+//rounter.get("/:dynamic/delete", isLoggedMiddleware, (req, res) =>{
+// User.findById(req.params.dynamic).then() => {
+//   if(!user) {
+//     return res.redirect("/auth/login");
+//}
+//User.findByIdAndDelete(req.session.user._id).then() => {
+//  return res.redirect("/")
+//}
+//}
+//})
 module.exports = router;
