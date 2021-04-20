@@ -26,23 +26,48 @@ router.post("/edit", isLoggedMiddleware, (req, res) => {
 });
 
 router.get("/delete", isLoggedMiddleware, async (req, res) => {
-  const userId = req.session.user._id;
-  // Delete the user
-  // await User.findByIdAndDelete(userId);
+  try {
+    const userId = req.session.user._id;
+    // Delete the user
+    await User.findByIdAndDelete(userId);
 
-  const allPetitionsByUser = await Petition.find({ owner: userId });
+    const allPetitionsByUser = await Petition.find({ owner: userId });
 
-  console.log("allPetitions byIser:", allPetitionsByUser);
+    // console.log("allPetitions byIser:", allPetitionsByUser); // array of all of petitions we need to delete;
 
-  // array of all of the update petitions for each single petition created by a user
-  const updatePetitions = allPetitionsByUser.map((e) =>
-    UpdatePetition.find({ parent: e._id })
-  );
+    await Promise.all(
+      allPetitionsByUser.map((e) => Petition.findByIdAndDelete(e._id))
+    );
+    // array of all of the update petitions for each single petition created by a user
+    const updatePetitions = allPetitionsByUser.map((e) =>
+      UpdatePetition.find({ parent: e._id })
+    );
 
-  const allUpdatePetitions = await Promise.all(updatePetitions);
-  console.log("updates: ", allUpdatePetitions);
+    const allUpdatePetitions = await Promise.all(updatePetitions);
+    //array of updates we need to delete;
 
-  res.render("profile");
+    const ids = allUpdatePetitions.flat().map((e) => e._id);
+
+    await Promise.all(ids.map((e) => UpdatePetition.findByIdAndDelete(e)));
+
+    const allPetitionsSigned = await Petition.find({
+      signatures: { $in: userId },
+    });
+
+    console.log(allPetitionsSigned); // array of petitions we need to update by removing the user
+    await Promise.all(
+      allPetitionsSigned.map((e) =>
+        Petition.findByIdAndUpdate(e._id, { $pull: { signatures: userId } })
+      )
+    );
+
+    // res.render("profile");
+    res.clearCookie("connect.sid"); // the default name of the session cookie name in the browser. so, cookiewise logging out the user
+    res.redirect("/");
+  } catch (error) {
+    console.log("OOPSIE: ", error.message);
+    res.redirect("/");
+  }
 
   // //  listing of all petitions by the current user
   // const allPetitionsByUser = await Petition.find({
