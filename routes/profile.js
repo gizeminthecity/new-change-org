@@ -23,7 +23,6 @@ router.post("/edit", isLoggedMiddleware, (req, res) => {
   });
 });
 
-<<<<<<< HEAD
 //router.get("/delete", isLoggedMiddleware, (req, res) => {
 //User.findByIdAndDelete(req.session.user._id).then(() => {
 // return res.redirect("/");
@@ -40,6 +39,4 @@ router.post("/edit", isLoggedMiddleware, (req, res) => {
 //}
 //}
 //})
-=======
->>>>>>> dev
 module.exports = router;
