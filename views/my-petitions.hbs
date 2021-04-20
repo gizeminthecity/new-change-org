@@ -13,17 +13,19 @@ Please start a <a href="/petitions/start-petition"> new petition</a>
 {{/each }}
 {{/if}}
 <br>
+
+
+
+
+
 <h2>Petitions Signed</h2>
+{{#each signatures}}
+    <li>
+      <a href="/petitions/{{this._id}}">{{this.title}}</a>
+    </li>
+{{/each}}
 
 <a href="/petitions">Sign a petition</a>
-
-
-{{#if signatures}}
-{{#each signatures}}
-
-<a href="/petitions/{{this._id}}">{{this.name}}</a>
-{{/each }}
-{{/if}}
 
 {{#if errorMessage}}
   <h5>{{errorMessage}}</h5>
