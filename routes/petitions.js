@@ -179,9 +179,34 @@ router.get("/:_id/delete", isLoggedIn, (req, res) => {
         });
 });
 
-router.get(":_id/sign", isLoggedIn, (req, res) => {
-    Petition.findById(req.params._id).populate("signatures"),
-        then((signedPetition) => {
+router.get("/:_id/sign", isLoggedIn, (req, res) => {
+    console.log("RUNNING");
+    return Petition.findByIdAndUpdate(
+        req.params._id,
+        {
+            $addToSet: { signatures: req.session.user._id },
+        },
+        { new: true }
+    )
+        .then((returnedPetition) => {
+            console.log("LOOK HERE", returnedPetition);
+        })
+        .catch((err) => console.log(err));
+
+    /*
+    Promise.all([
+        Petition.findById(req.params._id).populate("signatures"),
+        Petition.findByIdAndUpdate(
+            signedPetition._id,
+            {
+                $addToSet: { signatures: req.session.user._id },
+            },
+            { new: true }
+        ),
+    ])
+        .then((results) => {
+            const signedPetition = result[0];
+            const updatedPetition = result[1];
             if (!signedPetition) {
                 return res.redirect("/");
             }
@@ -200,24 +225,17 @@ router.get(":_id/sign", isLoggedIn, (req, res) => {
             ) {
                 return res.redirect(`/petitions/${signedPetition._id}`);
             }
-
-            Petition.findByIdAndUpdate(
-                signedPetition._id,
-                {
-                    $addToSet: { signatures: req.session.user._id },
-                },
-                { new: true }
-            ).then((updatedPetition) => {
-                console.log("updatedPetition: ", updatedPetition);
-                return res.render("my-petitions", {
-                    signedPetition,
-                    updatedPetition,
-                    isAlreadySigned,
-                });
+            console.log("updatedPetition: ", updatedPetition);
+            return res.render("my-petitions", {
+                signedPetition,
+                updatedPetition,
+                isAlreadySigned,
             });
-        }).catch((err) => {
+        })
+        .catch((err) => {
             console.log(err);
         });
+        */
 });
 
 module.exports = router;
