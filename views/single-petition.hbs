@@ -1,7 +1,8 @@
 {{#unless owner}}
   {{#with petition}}
-  <h3>{{this.name}}</h3>
-  <h2>{{this.description}}</h2>
+  <h2>{{this.name}}</h3>
+  <p>{{this.description}}</p>
+  <p>Signatures: {{this.signatures.length}}</p>
   <br>
   <a href="/petitions/{{this._id}}/sign">SIGN</a>
   {{/with}}
@@ -9,12 +10,10 @@
   <p>{{this.title}}</p>
   <p>{{this.description}}</p>
   {{/each}}
-  {{#each signatures}}
-     <p>{{this.name}}</p>
-  {{/each}}
+
 {{/unless}}
 
- 
+
 
 
 {{#if isOwner}}
