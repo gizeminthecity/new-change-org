@@ -10,7 +10,7 @@
     <label for="subject">What kind of issue are you petitioning on?</label>
 
     <select name="subject" id="subject">
-        {{#each subjects}}
+        {{#each ../subjects}}
         <option value="{{this}}">{{this}}</option>
         {{/each}}
     </select>
@@ -21,7 +21,7 @@
 <br>
 
     <label for="deadline">Deadline: </label>
-    <input type="datetime-local" name="deadline" id="deadline">
+    <input type="date" name="deadline" id="deadline">
 
 <br>
     <label for="location">Location: </label>

@@ -82,7 +82,7 @@ router.post("/start-petition", isLoggedIn, (req, res) => {
     })
         .then((createdPetition) => {
             console.log("createdPetition: ", createdPetition);
-            // res.redirect(`/petitions/${createdPetition._id}`);
+            res.redirect(`/petitions/${createdPetition._id}`);
         })
         .catch((err) => {
             console.log(err);
@@ -148,18 +148,35 @@ router.post("/:_id", isLoggedIn, (req, res) => {
 });
 
 router.get("/:_id/delete", isLoggedIn, (req, res) => {
-    Petition.findById(req.param._id)
+    Petition.findById(req.params._id)
         .populate("owner")
         .then((foundPetition) => {
             console.log("foundPtition: ", foundPetition);
-            if (!petition) {
+            if (!foundPetition) {
                 return res.redirect(`/`);
             }
-        });
+            if (
+                !foundPetition.owner._id.toString() ===
+                req.session.user._id.toString()
+            ) {
+                return res.redirect(`/`);
+            }
+            const deletePetition = Petition.findByIdAndDelete(
+                foundPetition._id
+            );
+            const deleteUpdates = UpdatePetition.findByIdAndUpdate(
+                foundPetition.parent._id,
+                {
+                    $pull: { updates: foundPetition.parent._id },
+                }
+            );
 
-    Petition.findByIdAndDelete(foundPetition._id).then(() => {
-        res.redirect("/my-petitions");
-    });
+            Promise.all([deletePetition, deleteUpdates])
+                .then(() => {
+                    res.redirect("/");
+                })
+                .catch((err) => console.log(err));
+        });
 });
 
 module.exports = router;
