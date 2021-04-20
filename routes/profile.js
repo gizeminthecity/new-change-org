@@ -13,14 +13,17 @@ router.get("/edit", isLoggedMiddleware, (req, res) => {
 router.post("/edit", isLoggedMiddleware, (req, res) => {
   const { username, bio } = req.body;
 
-  user
-    .findByIdAndUpdate(req.session.user._id, { username, bio }, { new: true })
-    .then((newUser) => {
-      req.session.user = newUser;
-      res.redirect("/profile");
-    });
+  User.findByIdAndUpdate(
+    req.session.user._id,
+    { username, bio },
+    { new: true }
+  ).then((newUser) => {
+    req.session.user = newUser;
+    res.redirect("/profile");
+  });
 });
 
+<<<<<<< HEAD
 //router.get("/delete", isLoggedMiddleware, (req, res) => {
 //User.findByIdAndDelete(req.session.user._id).then(() => {
 // return res.redirect("/");
@@ -37,4 +40,6 @@ router.post("/edit", isLoggedMiddleware, (req, res) => {
 //}
 //}
 //})
+=======
+>>>>>>> dev
 module.exports = router;
