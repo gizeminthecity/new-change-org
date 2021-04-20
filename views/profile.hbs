@@ -1,18 +1,17 @@
 {{#with user}}
 <h1>Welcome {{name}}</h1>
-
-
+<img src="../public/images/favicon.ico" alt="profile pic">
+<br>
 {{#if bio}}
 <label>About Me</label>
 <p>{{bio}}</p>
 {{/if}}</a>
 
 
-<img src="../public/images/favicon.ico" alt="profile pic">
-
 <p>{{username}}</p>
 <p>{{email}}</p>
 <br>
 <br>
 <a href="/profile/edit">Edit your profile</a>
+<a href="/delete">Delete Account</a>
 {{/with}}
