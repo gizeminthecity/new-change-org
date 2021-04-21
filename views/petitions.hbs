@@ -1,11 +1,19 @@
 
-<h1>Petition List</h1>
+<h3>List of Petitions</h3>
 
 {{#each petitionList}}
-    <a href="/petitions/{{this._id}}"><p>{{this.name}}</p></a>
+  <div class="petition-list">
+      <img src="" alt="petition-image">
+      <a href="/petitions/{{this._id}}"><p><b>{{this.name}}</b></p></a>
+      <p>{{this.description}}</p>
+  </div>
 {{/each}}
 
-<a href="/petitions/start-petition">Start a Petition</a>
+
+<div class="petitions-start-button">
+  <a href="/petitions/start-petition">Start a Petition</a>
+</div>
+
 
 
 

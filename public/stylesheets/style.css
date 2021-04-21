@@ -1,13 +1,63 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto+Condensed:700|Roboto:100,300,700");
+
 body {
     padding: 50px;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-    background-color: gray;
+}
+html,
+body {
+    margin: 0;
+    height: 100%;
+    background-color: #ddd4cb;
 }
 
+body {
+    font-family: Roboto;
+    font-size: 15px;
+    line-height: 1.5em;
+    font-weight: 300;
+}
 a {
-    color: #00b7ff;
+    color: black;
+    text-decoration: none;
+}
+
+.navbar-loggedin {
+    display: flex;
+    background-color: #718b7e;
+    padding: 20px;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.navbar-right-loggedin {
+    display: flex;
+    flex-direction: row;
+}
+.navbar {
+    display: flex;
+    background-color: #718b7e;
+    padding: 20px;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.navbar-right {
+    display: flex;
+    flex-direction: row;
 }
 
 h1 {
     color: 15px;
+}
+.logo {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.logo-span {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.petition-list {
+    border: 2px dotted #718b7e;
 }

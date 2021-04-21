@@ -4,8 +4,7 @@ const isLoggedIn = require("../middlewares/isLoggedIn");
 const Petition = require("../models/Petition.model");
 const User = require("../models/User.model");
 const UpdatePetition = require("../models/UpdatePetition.model");
-
-// const parser = require("../config/cloudinary");
+const parser = require("../config/cloudinary");
 
 router.get("/my-petitions", isLoggedIn, (req, res) => {
     Petition.find({ owner: req.session.user._id }).then((myPetitions) => {
@@ -50,47 +49,52 @@ router.get("/start-petition", isLoggedIn, (req, res) => {
     });
 });
 
-router.post("/start-petition", isLoggedIn, (req, res) => {
-    const {
-        name,
-        subject,
-        description,
-        deadline,
-        location,
-        signatureTarget,
-        image,
-    } = req.body;
+router.post(
+    "/start-petition",
+    isLoggedIn,
+    parser.single("image"),
+    (req, res) => {
+        const image = req.file.path;
+        const {
+            name,
+            subject,
+            description,
+            deadline,
+            location,
+            signatureTarget,
+        } = req.body;
 
-    Petition.findOne({ name }).then((found) => {
-        if (found) {
-            return res.render("start-petition", {
-                errorMessage: "This petition is already exist.",
-            });
-        }
-    });
-
-    Petition.create({
-        name,
-        subject,
-        description,
-        deadline,
-        location,
-        signatureTarget,
-        owner: req.session.user._id,
-        signatures: [req.session.user._id],
-        image,
-    })
-        .then((createdPetition) => {
-            console.log("createdPetition: ", createdPetition);
-            res.redirect(`/petitions/${createdPetition._id}`);
-        })
-        .catch((err) => {
-            console.log(err);
-            res.render("start-petition", {
-                errorMessage: "Something went wrong",
-            });
+        Petition.findOne({ name }).then((found) => {
+            if (found) {
+                return res.render("start-petition", {
+                    errorMessage: "This petition is already exist.",
+                });
+            }
         });
-});
+
+        Petition.create({
+            name,
+            subject,
+            description,
+            deadline,
+            location,
+            signatureTarget,
+            owner: req.session.user._id,
+            signatures: [req.session.user._id],
+            image,
+        })
+            .then((createdPetition) => {
+                console.log("createdPetition: ", createdPetition);
+                res.redirect(`/petitions/${createdPetition._id}`);
+            })
+            .catch((err) => {
+                console.log(err);
+                res.render("start-petition", {
+                    errorMessage: "Something went wrong",
+                });
+            });
+    }
+);
 
 router.get("/:_id", isLoggedIn, (req, res) => {
     Promise.all([
@@ -101,11 +105,13 @@ router.get("/:_id", isLoggedIn, (req, res) => {
     ])
         .then((results) => {
             const allUpdates = results[0];
-            console.log("allUpdates:", allUpdates);
+            // console.log("allUpdates:", allUpdates);
             const foundPetition = results[1];
+            console.log("FOUND PETITION: ", foundPetition);
             if (!foundPetition) {
                 return res.redirect(`/`);
             }
+
             let isOwner = false;
             if (req.session.user) {
                 if (
@@ -192,17 +198,19 @@ router.get("/:_id/sign", isLoggedIn, (req, res) => {
             if (!returnedPetition) {
                 return res.redirect("/");
             }
+            let notSignedYet;
             const isAlreadySigned = returnedPetition.signatures.find(
                 (user) => user.username === req.session.user.username
             );
             if (isAlreadySigned) {
-                return res.render(`/petitions/${returnedPetition._id}`);
+                notSignedYet = true;
             }
             console.log("LOOK HERE", returnedPetition);
 
             return res.render("my-petitions", {
                 returnedPetition,
                 isAlreadySigned,
+                notSignedYet,
             });
         })
         .catch((err) => console.log(err));

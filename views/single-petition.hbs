@@ -2,18 +2,21 @@
   {{#with petition}}
   <h2>{{this.name}}</h3>
   <p>{{this.description}}</p>
+  <img src="{{this.image}}" alt="petition image">
   <p>Signatures: {{this.signatures.length}}</p>
   <br>
-  <a href="/petitions/{{this._id}}/sign">SIGN</a>
+ <a href="/petitions/{{this._id}}/sign">SIGN</a>
   {{/with}}
  {{#each updateList}}
   <p>{{this.title}}</p>
   <p>{{this.description}}</p>
   {{/each}}
-
 {{/unless}}
 
+ 
+   {{!-- {{#if notSignedYet}}
 
+ {{/if}} --}}
 
 
 {{#if isOwner}}

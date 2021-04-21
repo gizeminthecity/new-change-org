@@ -10,29 +10,32 @@
 </head>
 
 <body>
-   <nav>
-      {{#if user}}
 
-      Welcome back, {{user.name}}
+      {{#if user}}
       <br>
-      <a href="/profile">Go to profile</a>
+      
       <br>
-      <nav class="navbar" style="background-color: pink">
-         <a href="/">Home</a>
-         <a href="/petitions/my-petitions">My Petitions</a>
-         <a href="/petitions">All Petitions</a>
-         <a href="/auth/logout">Logout</a>
+      <nav class="navbar-loggedin">
+         <div class="logo"><div><a href="/">New Change.Org</a></div></div>
+         <div class="navbar-right-loggedin"> 
+            <div style="padding-right: 13px;"><a href="/petitions">All Petitions</a></div>
+            <div style="padding-right: 13px;"><a href="/petitions/my-petitions">My Petitions</a></div>
+            <div style="padding-right: 13px;"><a href="/profile">Profile</a></div>
+            <div style="padding-right: 13px;"><a href="/auth/logout">Logout</a></div>
+         </div> 
       </nav>
       {{else}}
-      Welcome. Please sign in
-      <div>
-         <a href="/">Home</a>
-         <a href="/auth/signup">Signup</a>
-         <a href="/auth/login">Login</a>
-
-      </div>
+      
+      <nav class="navbar">     
+         <div class="logo"><div><a href="/">New Change.Org</a></div></div>
+         <div class="navbar-right">     
+            <div style="padding-right: 13px;"><a href="/auth/signup">Signup</a></div>
+            <div style="padding-right: 13px;"><a href="/auth/login">Login</a></div>
+         </div>
+      </nav>
+      <div><p>Welcome to <span class="logo-span">New Change.Org</span> </p></div>
       {{/if}}
-   </nav>
+  
 
    {{{body}}}
 

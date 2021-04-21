@@ -2,7 +2,7 @@
 
 {{#with user}}
 
-<form action="/petitions/start-petition" method="POST">
+<form action="/petitions/start-petition" method="POST" enctype="multipart/form-data">
     <label for="petitionTitle">Write your petition title: </label>
     <input type="text" name="name" placeholder="...">
 <br>

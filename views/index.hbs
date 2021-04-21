@@ -1,20 +1,29 @@
+
+
 {{#if user}}
-
-<h1>{{title}}</h1>
-
-<p>New Change.Org</p>
-<form action="/petitions">
-  <a href="/petitions">All Petitions</a>
-</form>
+<div class="index-loggedin">
+  <div>
+    <p>Welcome to <span class="logo-span">New Change.Org</span> {{user.name}}</p>
+  </div>
+  <div>
+    <h1>The world’s platform for change</h1>
+  </div>
+  <div>
+    <a href="/petitions/start-petition">Star a Petition</a>
+  </div>
+</div>
 
 {{else}}
 
-<h1>{{title}}</h1>
+<div class="index">
+  <div>
+    <p>The world’s platform for change</p>
+  </div>
+  <div>
+   <button type="submit"> <a href="/auth/login">Login</a></button>
+    <button type="submit"><a href="/auth/signup">Sign Up</a></button>
+  </div>
+</div>
 
-<p>New Change.Org</p>
 
-
-
-<button type="submit"> <a href="/auth/login">Login</a></button>
-<button type="submit"><a href="/auth/signup">Sign Up</a></button>
 {{/if}}
