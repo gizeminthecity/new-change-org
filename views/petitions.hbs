@@ -1,18 +1,29 @@
 
-<h3>List of Petitions</h3>
+<p class="heading-list">THE LIST OF PETITIONS</p>
 
 {{#each petitionList}}
+<div class="main-container-list">  
   <div class="petition-list">
-      <img src="" alt="petition-image">
+    <div class="container-photo">
+      <img style="width: 150px; height: 150px;" src="{{this.image}}" alt="petition-image">
+    </div>
+    <div class="container-description">
       <a href="/petitions/{{this._id}}"><p><b>{{this.name}}</b></p></a>
       <p>{{this.description}}</p>
+      <a href="/petitions/{{this._id}}"><p><b>SIGN</b></p></a>
+    </div> 
   </div>
-{{/each}}
-
-
-<div class="petitions-start-button">
-  <a href="/petitions/start-petition">Start a Petition</a>
 </div>
+
+{{/each}} 
+
+<div class="container-cause">
+  <p>If you could not find a cause to support, you can start your own here</p>
+  <div id="petition-start-button">
+    <a href="/petitions/start-petition">START A PETITION</a>
+  </div>
+</div>
+
 
 
 
@@ -20,3 +31,4 @@
 {{#if errorMessage}}
   <h5>{{errorMessage}}</h5>
 {{/if}}
+

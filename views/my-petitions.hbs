@@ -8,8 +8,10 @@ Please start a <a href="/petitions/start-petition"> new petition</a>
 
 {{#if owner}}
 {{#each owner}}
+<li>
+  <a href="/petitions/{{this._id}}">{{this.name}}</a>
+</li>
 
-<a href="/petitions/{{this._id}}">{{this.name}}</a>
 {{/each }}
 {{/if}}
 <br>
