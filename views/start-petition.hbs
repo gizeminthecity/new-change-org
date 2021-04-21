@@ -1,14 +1,9 @@
-<h1>Start a petition </h1>
 
 {{#with user}}
-
+<div class="start-petition">
 <form action="/petitions/start-petition" method="POST" enctype="multipart/form-data">
-    <label for="petitionTitle">Write your petition title: </label>
-    <input type="text" name="name" placeholder="...">
-<br>
-
     <label for="subject">What kind of issue are you petitioning on?</label>
-
+<br>
     <select name="subject" id="subject">
         {{#each ../subjects}}
         <option value="{{this}}">{{this}}</option>
@@ -16,28 +11,40 @@
     </select>
 <br>
 <br>
-    <label for="problem">Explain the problem you want to solve</label>
-    <input type="text" name="description" id="problem" min="30" placeholder="Explain the problem you want to solve">
+    <label for="petitionTitle">Write your petition title: </label>
+<br>
+    <input type="text" name="name" placeholder="...">
+<br>
+<br>
+    <label for="problem">Explain the problem you want to solve: </label>
+<br>
+    {{!-- <input type="text" name="description" id="problem" min="30" placeholder="..."> --}}
+    <textarea rows="5" cols="40" name="description" id="problem" min="30" placeholder="..."></textarea>
 <br>
 
     <label for="deadline">Deadline: </label>
+<br>
     <input type="date" name="deadline" id="deadline">
 
 <br>
     <label for="location">Location: </label>
+<br>
     <input type="text" name="location" nameplaceholder="Location">
 <br>
     <label for="signatureTarget">What is your signature target? </label>
-    <input type="number" name="signatureTarget" id="signatureTarget" min="0" placeholder="Enter number">
+<br>
+    <input type="number" name="signatureTarget" id="signatureTarget" min="0" placeholder="...">
 
 <br>
     <label for="image">Please upload a photo: </label>
+<br>
     <input type="file" id="image" name="image">
 <br>
-    <button type="submit">Start a petition</button>
+<br>
+    <button type="submit">Start Petition</button>
 <br>
 </form>
-
+</div>
 {{/with}}
 
 {{#if errorMessage}}
