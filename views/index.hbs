@@ -3,10 +3,11 @@
 {{#if user}}
 <div class="index-loggedin">
   <div>
-    <p>Welcome to <span class="logo-span">New Change.Org</span> {{user.name}}</p>
+    <p>Welcome back <b>{{user.name}}</b></p>
   </div>
-  <div>
-    <h1>The world’s platform for change</h1>
+  <div class="index-heading">
+    <h2>The world’s new platform for change</h2>
+    <h1>New Change.Org</h1>
   </div>
   <div>
     <a class="button-style" href="/petitions/start-petition">Start a Petition</a>
@@ -15,13 +16,14 @@
 
 {{else}}
 
-<div class="index">
-  <div>
-    <p>The world’s platform for change</p>
+<div class="index-page">
+  <div class="index-heading">
+    <h2>The world’s platform for change</h2>
+    <h1>New Change.Org</h1>
   </div>
   <div>
-   <button type="submit"> <a href="/auth/login">Login</a></button>
-    <button type="submit"><a href="/auth/signup">Sign Up</a></button>
+    <button class="index-button" type="submit"> <a href="/auth/login">Login</a></button>
+    <button class="index-button" type="submit"><a href="/auth/signup">Sign Up</a></button>
   </div>
 </div>
 

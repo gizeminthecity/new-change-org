@@ -152,3 +152,21 @@ label {
     line-height: 1.5em;
     font-weight: 300;
 }
+
+.index-loggedin {
+    margin: 50px;
+    text-align: center;
+}
+
+.index-heading {
+    padding: 50px;
+}
+
+.index-page {
+    text-align: center;
+    margin: 50px;
+}
+.index-button {
+    margin-right: 10px;
+    margin-left: 10px;
+}
