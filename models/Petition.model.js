@@ -31,8 +31,8 @@ const petitionSchema = new mongoose.Schema({
     image: {
         type: String,
         // required: true,
-        // default:
-        //     "https://res.cloudinary.com/gizemella/image/upload/v1619017349/hqdefault_s2fove.jpg",
+        default:
+            "https://res.cloudinary.com/gizemella/image/upload/v1619017349/hqdefault_s2fove.jpg",
     },
 });
 

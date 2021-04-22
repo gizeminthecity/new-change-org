@@ -1,24 +1,25 @@
 const router = require("express").Router();
 const User = require("../models/User.model");
-const isLoggedMiddleware = require("../middlewares/isLoggedIn");
+const isLoggedIn = require("../middlewares/isLoggedIn");
 const Petition = require("../models/Petition.model");
 const UpdatePetition = require("../models/UpdatePetition.model");
 const parser = require("../config/cloudinary");
 
-router.get("/", isLoggedMiddleware, (req, res) => {
+router.get("/", isLoggedIn, (req, res) => {
     res.render("profile", { user: req.session.user });
 });
 
-router.get("/edit", isLoggedMiddleware, (req, res) => {
+router.get("/edit", isLoggedIn, (req, res) => {
     res.render("edit-profile", { user: req.session.user });
 });
 
-router.post("/edit", isLoggedMiddleware, (req, res) => {
+router.post("/edit", isLoggedIn, parser.single("image"), (req, res) => {
+    const image = req.file?.path;
     const { username, bio } = req.body;
 
     User.findByIdAndUpdate(
         req.session.user._id,
-        { username, bio },
+        { username, bio, image },
         { new: true }
     ).then((newUser) => {
         req.session.user = newUser;
@@ -26,7 +27,7 @@ router.post("/edit", isLoggedMiddleware, (req, res) => {
     });
 });
 
-router.get("/delete", isLoggedMiddleware, async (req, res) => {
+router.get("/delete", isLoggedIn, async (req, res) => {
     try {
         const userId = req.session.user._id;
         // Delete the user

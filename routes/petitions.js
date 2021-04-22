@@ -54,7 +54,7 @@ router.post(
     isLoggedIn,
     parser.single("image"),
     (req, res) => {
-        const image = req.file.path;
+        const image = req.file?.path;
         const {
             name,
             subject,
@@ -70,29 +70,28 @@ router.post(
                     errorMessage: "This petition is already exist.",
                 });
             }
-        });
-
-        Petition.create({
-            name,
-            subject,
-            description,
-            deadline,
-            location,
-            signatureTarget,
-            owner: req.session.user._id,
-            signatures: [req.session.user._id],
-            image,
-        })
-            .then((createdPetition) => {
-                // console.log("createdPetition: ", createdPetition);
-                res.redirect(`/petitions/${createdPetition._id}`);
+            Petition.create({
+                name,
+                subject,
+                description,
+                deadline,
+                location,
+                signatureTarget,
+                owner: req.session.user._id,
+                signatures: [req.session.user._id],
+                image,
             })
-            .catch((err) => {
-                console.log(err);
-                res.render("start-petition", {
-                    errorMessage: "Something went wrong",
+                .then((createdPetition) => {
+                    // console.log("createdPetition: ", createdPetition);
+                    res.redirect(`/petitions/${createdPetition._id}`);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    res.render("start-petition", {
+                        errorMessage: "Something went wrong",
+                    });
                 });
-            });
+        });
     }
 );
 
@@ -111,6 +110,17 @@ router.get("/:_id", isLoggedIn, (req, res) => {
             if (!foundPetition) {
                 return res.redirect(`/`);
             }
+            let signatureIdsArray = foundPetition.signatures;
+
+            const signatureIds = signatureIdsArray.map((el) => el.username);
+            console.log("SIGNATURE USERNAME ARRAY", signatureIds);
+
+            let isSignedAlready;
+            if (req.session.user) {
+                if (signatureIds.includes(req.session.user.username)) {
+                    isSignedAlready = true;
+                }
+            }
 
             let isOwner = false;
             if (req.session.user) {
@@ -120,7 +130,9 @@ router.get("/:_id", isLoggedIn, (req, res) => {
                     isOwner = true;
                 }
             }
+            console.log(isSignedAlready);
             res.render("single-petition", {
+                isSignedAlready,
                 petition: foundPetition,
                 isOwner,
                 updateList: allUpdates,
@@ -198,13 +210,13 @@ router.get("/:_id/sign", isLoggedIn, (req, res) => {
             console.log("RETURNED PETITION: ", returnedPetition);
             console.log("SEssion id: ", req.session);
 
-            let isAlreadySigned = false;
+            let isSigning = false;
 
             if (returnedPetition.signatures.includes(req.session.user._id)) {
-                isAlreadySigned = true;
+                isSigning = true;
             }
             res.render("single-petition", {
-                isAlreadySigned,
+                isSigning,
                 returnedPetition: returnedPetition,
             });
         })

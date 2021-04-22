@@ -1,15 +1,18 @@
-<h3>Edit your profile</h3>
+<p style="font-size: 20px;">EDIT YOUR PROFILE</p>
 
 {{#with user}}
-<form method="POST" action="/profile/edit">
-  <label>Username</label>
-  <input name="username" value="{{username}}">
-  <br>
-  <br>
-  <label>About me</label>
-  <input name="bio" value="{{bio}}">
-  <button type="submit">Save changes</button>
-</form>
-
-
+  <form method="POST" action="/profile/edit" enctype="multipart/form-data">
+    <label>Username : </label>
+    <input name="username" value="{{username}}">
+    <br>
+    <br>
+    <label>About me : </label>
+    <input name="bio" value="{{bio}}">
+    <br>
+    <label for="image">Please upload a photo : </label>
+    
+    <input type="file" id="image" name="image">
+    <br>
+    <button type="submit">Save changes</button>
+  </form>
 {{/with}}

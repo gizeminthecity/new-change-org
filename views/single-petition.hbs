@@ -1,39 +1,52 @@
-{{#unless owner}}
-  {{#with petition}}
-  <div class="container-single-petition">
-    <div>
-      <img class="button-style"  id="single-pet-img" src="{{this.image}}" alt="petition image">
-    </div>
-    <div class="single-petition-info">
-      <h2>{{this.name}}</h3>
-      <p>{{this.description}}</p>
-      <p>Signatures: {{this.signatures.length}}</p>
 
-      <a class="button-style sign-button" href="/petitions/{{this._id}}/sign">SIGN</a> 
+
+{{#unless owner}}
+ 
+  {{#with petition}}
+    <div class="container-single-petition">
+      <div>
+       <img class="button-style"  id="single-pet-img" src="{{this.image}}" alt="petition image">
+      </div>
+    
+      <div class="single-petition-info">
+        <h2>{{this.name}}</h3>
+        <p>{{this.description}}</p>
+        <p>Signatures: {{this.signatures.length}}</p>
+        {{#if ../isSignedAlready}}
+          <p>You signed this petition already</p> 
+        {{else}}
+          <a class="button-style sign-button" href="/petitions/{{this._id}}/sign">SIGN</a>
+        {{/if}}  
+      </div>
     </div>
-  </div>
   {{/with}}
-   <br>
-    {{#each updateList}}
+   <br> 
+  {{#each updateList}}
       <div class="updates petition-list">    
         <p><b>{{this.title}}</b></p>
         <p>{{this.description}}</p>
       </div> 
-   {{/each}}
+  {{/each}}
+
 {{/unless}}
 
- 
 
-{{#if isAlreadySigned}}
-{{#with returnedPetition}}
-<h1>Thank you for signing the petition {{this.name}}</h1>
-<a href="/petitions/{{this._id}}">Return to the petition</a>
-{{/with}}
+
+
+
+{{#if isSigning}}
+  {{#with returnedPetition}}
+  <div class="return-petition-button" >
+    <p>Thank you for signing the petition <b>{{this.name}}</b></p>
+    <a class="button-style" href="/petitions/{{this._id}}">Return</a>
+  </div>
+    
+  {{/with}}
 {{/if}}
- 
-   {{!-- {{#if notSignedYet}}
 
- {{/if}} --}}
+
+
+
 
 {{#if isOwner}}
 <div class="container-update">
@@ -51,11 +64,10 @@
     <br>
     <div class="delete-button">
       <a class="button-style" href="/petitions/{{petition._id}}/delete">Delete Petition</a> 
-    </div>
-     
+    </div>  
 </div>
-
 {{/if}}
+<br>
 
 
 
