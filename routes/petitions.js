@@ -30,16 +30,8 @@ router.get("/my-petitions", isLoggedIn, (req, res) => {
 
 router.get("/", (req, res) => {
     Petition.find().then((allPetitions) => {
-        // console.log("allPetitions", allPetitions);
         res.render("petitions", { petitionList: allPetitions });
     });
-
-    // if (req.session.user) {
-    //     Petition.find().then((allPetitions) => {
-    //         console.log("allPetitions", allPetitions);
-    //         res.render("petitions", { petitionList: allPetitions });
-    //     });
-    // }
 });
 
 router.get("/start-petition", isLoggedIn, (req, res) => {
@@ -82,7 +74,6 @@ router.post(
                 image,
             })
                 .then((createdPetition) => {
-                    // console.log("createdPetition: ", createdPetition);
                     res.redirect(`/petitions/${createdPetition._id}`);
                 })
                 .catch((err) => {
@@ -104,16 +95,12 @@ router.get("/:_id", isLoggedIn, (req, res) => {
     ])
         .then((results) => {
             const allUpdates = results[0];
-            // console.log("allUpdates:", allUpdates);
             const foundPetition = results[1];
-            // console.log("FOUND PETITION: ", foundPetition);
             if (!foundPetition) {
                 return res.redirect(`/`);
             }
             let signatureIdsArray = foundPetition.signatures;
-
             const signatureIds = signatureIdsArray.map((el) => el.username);
-            console.log("SIGNATURE USERNAME ARRAY", signatureIds);
 
             let isSignedAlready;
             if (req.session.user) {
@@ -130,7 +117,6 @@ router.get("/:_id", isLoggedIn, (req, res) => {
                     isOwner = true;
                 }
             }
-            console.log(isSignedAlready);
             res.render("single-petition", {
                 isSignedAlready,
                 petition: foundPetition,
@@ -144,7 +130,6 @@ router.get("/:_id", isLoggedIn, (req, res) => {
 });
 
 router.post("/:_id", isLoggedIn, (req, res) => {
-    // console.log("HELLO: ", req);
     const { title, description, image } = req.body;
 
     UpdatePetition.create({
@@ -154,7 +139,6 @@ router.post("/:_id", isLoggedIn, (req, res) => {
         parent: req.params._id,
     })
         .then((createdUpdate) => {
-            // console.log("createdUpdate: ", createdUpdate);
             res.redirect(`/petitions/${req.params._id}`);
         })
         .catch((err) => {
@@ -169,7 +153,6 @@ router.get("/:_id/delete", isLoggedIn, (req, res) => {
     Petition.findById(req.params._id)
         .populate("owner")
         .then((foundPetition) => {
-            // console.log("foundPtition: ", foundPetition);
             if (!foundPetition) {
                 return res.redirect(`/`);
             }
@@ -198,7 +181,6 @@ router.get("/:_id/delete", isLoggedIn, (req, res) => {
 });
 
 router.get("/:_id/sign", isLoggedIn, (req, res) => {
-    console.log("RUNNING");
     return Petition.findByIdAndUpdate(
         req.params._id,
         {
@@ -207,9 +189,6 @@ router.get("/:_id/sign", isLoggedIn, (req, res) => {
         { new: true }
     )
         .then((returnedPetition) => {
-            console.log("RETURNED PETITION: ", returnedPetition);
-            console.log("SEssion id: ", req.session);
-
             let isSigning = false;
 
             if (returnedPetition.signatures.includes(req.session.user._id)) {
@@ -219,6 +198,27 @@ router.get("/:_id/sign", isLoggedIn, (req, res) => {
                 isSigning,
                 returnedPetition: returnedPetition,
             });
+        })
+        .catch((err) => console.log(err));
+});
+
+router.get("/:_id/remove", isLoggedIn, (req, res) => {
+    return Petition.findByIdAndUpdate(
+        req.params._id,
+        {
+            $pull: { signatures: req.session.user._id },
+        },
+        { new: true }
+    )
+        .then((removedSignature) => {
+            console.log("foundPetition: ", removedSignature);
+            let isRemoved = false;
+
+            if (!removedSignature.signatures.includes(req.session.user._id)) {
+                isRemoved = true;
+                console.log(isRemoved);
+            }
+            res.render("single-petition", { isRemoved });
         })
         .catch((err) => console.log(err));
 });

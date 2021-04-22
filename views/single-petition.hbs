@@ -13,7 +13,9 @@
         <p>{{this.description}}</p>
         <p>Signatures: {{this.signatures.length}}</p>
         {{#if ../isSignedAlready}}
-          <p>You signed this petition already</p> 
+          <p>You signed this petition already</p>
+          <br>
+          <a class="button-style" href="/petitions/{{this._id}}/remove">REMOVE</a>
         {{else}}
           <a class="button-style sign-button" href="/petitions/{{this._id}}/sign">SIGN</a>
         {{/if}}  
@@ -30,7 +32,13 @@
 
 {{/unless}}
 
-
+<div class="container-remove">
+  {{#if isRemoved}}
+  <p>Your signature has been removed <b>{{this.name}}</b></p>
+  <br>
+  <a class="button-style" href="/petitions">Return All Petitions</a>
+  {{/if}}
+</div>
 
 
 
