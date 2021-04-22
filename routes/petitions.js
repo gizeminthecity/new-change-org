@@ -107,14 +107,14 @@ router.get("/:_id", isLoggedIn, (req, res) => {
             const allUpdates = results[0];
             // console.log("allUpdates:", allUpdates);
             const foundPetition = results[1];
-            console.log("FOUND PETITION: ", foundPetition);
+            // console.log("FOUND PETITION: ", foundPetition);
             if (!foundPetition) {
                 return res.redirect(`/`);
             }
             let signatureIdsArray = foundPetition.signatures;
 
             const signatureIds = signatureIdsArray.map((el) => el.username);
-            console.log("SIGNATURE ID ARRAY", signatureIds);
+            // console.log("SIGNATURE ID ARRAY", signatureIds);
 
             let isSingedAlready = false;
             if (req.session.user) {
@@ -131,7 +131,7 @@ router.get("/:_id", isLoggedIn, (req, res) => {
                     isOwner = true;
                 }
             }
-            console.log(isSingedAlready);
+            // console.log(isSingedAlready);
             res.render("single-petition", {
                 isSingedAlready,
                 petition: foundPetition,
