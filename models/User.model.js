@@ -24,8 +24,10 @@ const userSchema = new Schema({
         type: String,
         max: 500,
     },
-    profilePic: {
+    image: {
         type: String,
+        default:
+            "https://res.cloudinary.com/gizemella/image/upload/v1619017349/hqdefault_s2fove.jpg",
     },
     website: {
         type: String,

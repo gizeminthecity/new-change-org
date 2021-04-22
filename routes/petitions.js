@@ -15,8 +15,8 @@ router.get("/my-petitions", isLoggedIn, (req, res) => {
             ],
         })
             .then((signedPetitions) => {
-                console.log("owner: ", myPetitions);
-                console.log("signedPetitions: ", signedPetitions);
+                // console.log("owner: ", myPetitions);
+                // console.log("signedPetitions: ", signedPetitions);
                 res.render("my-petitions", {
                     owner: myPetitions,
                     signatures: signedPetitions,
@@ -30,7 +30,7 @@ router.get("/my-petitions", isLoggedIn, (req, res) => {
 
 router.get("/", (req, res) => {
     Petition.find().then((allPetitions) => {
-        console.log("allPetitions", allPetitions);
+        // console.log("allPetitions", allPetitions);
         res.render("petitions", { petitionList: allPetitions });
     });
 
@@ -54,7 +54,7 @@ router.post(
     isLoggedIn,
     parser.single("image"),
     (req, res) => {
-        const image = req.file.path;
+        const image = req.file?.path;
         const {
             name,
             subject,
@@ -70,29 +70,28 @@ router.post(
                     errorMessage: "This petition is already exist.",
                 });
             }
-        });
-
-        Petition.create({
-            name,
-            subject,
-            description,
-            deadline,
-            location,
-            signatureTarget,
-            owner: req.session.user._id,
-            signatures: [req.session.user._id],
-            image,
-        })
-            .then((createdPetition) => {
-                console.log("createdPetition: ", createdPetition);
-                res.redirect(`/petitions/${createdPetition._id}`);
+            Petition.create({
+                name,
+                subject,
+                description,
+                deadline,
+                location,
+                signatureTarget,
+                owner: req.session.user._id,
+                signatures: [req.session.user._id],
+                image,
             })
-            .catch((err) => {
-                console.log(err);
-                res.render("start-petition", {
-                    errorMessage: "Something went wrong",
+                .then((createdPetition) => {
+                    // console.log("createdPetition: ", createdPetition);
+                    res.redirect(`/petitions/${createdPetition._id}`);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    res.render("start-petition", {
+                        errorMessage: "Something went wrong",
+                    });
                 });
-            });
+        });
     }
 );
 
@@ -107,9 +106,20 @@ router.get("/:_id", isLoggedIn, (req, res) => {
             const allUpdates = results[0];
             // console.log("allUpdates:", allUpdates);
             const foundPetition = results[1];
-            console.log("FOUND PETITION: ", foundPetition);
+            // console.log("FOUND PETITION: ", foundPetition);
             if (!foundPetition) {
                 return res.redirect(`/`);
+            }
+            let signatureIdsArray = foundPetition.signatures;
+
+            const signatureIds = signatureIdsArray.map((el) => el.username);
+            console.log("SIGNATURE USERNAME ARRAY", signatureIds);
+
+            let isSignedAlready;
+            if (req.session.user) {
+                if (signatureIds.includes(req.session.user.username)) {
+                    isSignedAlready = true;
+                }
             }
 
             let isOwner = false;
@@ -120,7 +130,9 @@ router.get("/:_id", isLoggedIn, (req, res) => {
                     isOwner = true;
                 }
             }
+            console.log(isSignedAlready);
             res.render("single-petition", {
+                isSignedAlready,
                 petition: foundPetition,
                 isOwner,
                 updateList: allUpdates,
@@ -142,7 +154,7 @@ router.post("/:_id", isLoggedIn, (req, res) => {
         parent: req.params._id,
     })
         .then((createdUpdate) => {
-            console.log("createdUpdate: ", createdUpdate);
+            // console.log("createdUpdate: ", createdUpdate);
             res.redirect(`/petitions/${req.params._id}`);
         })
         .catch((err) => {
@@ -157,7 +169,7 @@ router.get("/:_id/delete", isLoggedIn, (req, res) => {
     Petition.findById(req.params._id)
         .populate("owner")
         .then((foundPetition) => {
-            console.log("foundPtition: ", foundPetition);
+            // console.log("foundPtition: ", foundPetition);
             if (!foundPetition) {
                 return res.redirect(`/`);
             }
@@ -195,69 +207,20 @@ router.get("/:_id/sign", isLoggedIn, (req, res) => {
         { new: true }
     )
         .then((returnedPetition) => {
-            if (!returnedPetition) {
-                return res.redirect("/");
-            }
-            let notSignedYet;
-            const isAlreadySigned = returnedPetition.signatures.find(
-                (user) => user.username === req.session.user.username
-            );
-            if (isAlreadySigned) {
-                notSignedYet = true;
-            }
-            console.log("LOOK HERE", returnedPetition);
+            console.log("RETURNED PETITION: ", returnedPetition);
+            console.log("SEssion id: ", req.session);
 
-            return res.render("my-petitions", {
-                returnedPetition,
-                isAlreadySigned,
-                notSignedYet,
+            let isSigning = false;
+
+            if (returnedPetition.signatures.includes(req.session.user._id)) {
+                isSigning = true;
+            }
+            res.render("single-petition", {
+                isSigning,
+                returnedPetition: returnedPetition,
             });
         })
         .catch((err) => console.log(err));
-
-    /*
-    Promise.all([
-        Petition.findById(req.params._id).populate("signatures"),
-        Petition.findByIdAndUpdate(
-            signedPetition._id,
-            {
-                $addToSet: { signatures: req.session.user._id },
-            },
-            { new: true }
-        ),
-    ])
-        .then((results) => {
-            const signedPetition = result[0];
-            const updatedPetition = result[1];
-            if (!signedPetition) {
-                return res.redirect("/");
-            }
-
-            const isAlreadySigned = signedPetition.signatures.find(
-                (user) => user.username === req.session.user.username
-            );
-
-            if (isAlreadySigned) {
-                return res.redirect(`/petitions/${signedPetition._id}`);
-            }
-
-            if (
-                signedPetition.signatures.length >=
-                signedPetition.signatureTarget
-            ) {
-                return res.redirect(`/petitions/${signedPetition._id}`);
-            }
-            console.log("updatedPetition: ", updatedPetition);
-            return res.render("my-petitions", {
-                signedPetition,
-                updatedPetition,
-                isAlreadySigned,
-            });
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-        */
 });
 
 module.exports = router;

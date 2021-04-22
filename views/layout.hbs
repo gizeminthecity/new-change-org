@@ -16,12 +16,17 @@
       
       <br>
       <nav class="navbar-loggedin">
-         <div class="logo"><div><a href="/">New Change.Org</a></div></div>
+         <div class="logo">
+            <div>
+               <a href="/">New Change.Org</a>
+            </div>        
+         </div>
          <div class="navbar-right-loggedin"> 
             <div style="padding-right: 13px;"><a href="/petitions">All Petitions</a></div>
+            <div style="padding-right: 13px;"><a href="/petitions/start-petition">Start Petition</a></div>     
             <div style="padding-right: 13px;"><a href="/petitions/my-petitions">My Petitions</a></div>
             <div style="padding-right: 13px;"><a href="/profile">Profile</a></div>
-            <div style="padding-right: 13px;"><a href="/auth/logout">Logout</a></div>
+            <div style="padding-right: 13px;"><a href="/auth/logout"><b>{{this.user.name}}</b> Logout</a></div>
          </div> 
       </nav>
       {{else}}
@@ -33,7 +38,6 @@
             <div style="padding-right: 13px;"><a href="/auth/login">Login</a></div>
          </div>
       </nav>
-      <div><p>Welcome to <span class="logo-span">New Change.Org</span> </p></div>
       {{/if}}
   
 

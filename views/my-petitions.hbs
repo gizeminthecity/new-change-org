@@ -1,34 +1,40 @@
-<h1>My Petitions</h1>
 
+<div class="container-my-petitions">
+  <div>
+    <p>PETITIONS YOU STARTED</p>
+    {{#unless owner}}
+    Please start a <a href="/petitions/start-petition"> new petition</a>
+    {{/unless}}
 
-
-{{#unless owner}}
-Please start a <a href="/petitions/start-petition"> new petition</a>
-{{/unless}}
-
-{{#if owner}}
-{{#each owner}}
-<li>
-  <a href="/petitions/{{this._id}}">{{this.name}}</a>
-</li>
-
-{{/each }}
-{{/if}}
-<br>
-
-
-
-
-
-<h2>Petitions Signed</h2>
-{{#each signatures}}
-    <li>
+    {{#if owner}}
+    {{#each owner}}
+    <li class="my-petitions-list">
+    <a href="/petitions/{{this._id}}">{{this.name}}</a>
+    </li>
+    {{/each }}
+    {{/if}}
+    <br>
+  </div>
+  <div>
+    <p>PETITIONS YOU SUPPORT</p>
+    {{#each signatures}}
+    <li class="my-petitions-list">
       <a href="/petitions/{{this._id}}">{{this.name}}</a>
     </li>
-{{/each}}
+    {{/each}}
 
-<a href="/petitions">Sign a petition</a>
+  
+      
 
-{{#if errorMessage}}
-  <h5>{{errorMessage}}</h5>
-{{/if}}
+    {{#if errorMessage}}
+    <h5>{{errorMessage}}</h5>
+    {{/if}}
+  </div>
+  
+  
+</div>
+<div class="my-petitions-button" >
+      <div><a class="button-style" href="/petitions/start-petition">START A PETITION</a></div>
+      <div><a class="button-style"href="/petitions">SIGN A PETITION</a></div> 
+</div>
+
