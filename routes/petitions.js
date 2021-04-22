@@ -107,9 +107,20 @@ router.get("/:_id", isLoggedIn, (req, res) => {
             const allUpdates = results[0];
             // console.log("allUpdates:", allUpdates);
             const foundPetition = results[1];
-            // console.log("FOUND PETITION: ", foundPetition);
+            console.log("FOUND PETITION: ", foundPetition);
             if (!foundPetition) {
                 return res.redirect(`/`);
+            }
+            let signatureIdsArray = foundPetition.signatures;
+
+            const signatureIds = signatureIdsArray.map((el) => el.username);
+            console.log("SIGNATURE ID ARRAY", signatureIds);
+
+            let isSingedAlready = false;
+            if (req.session.user) {
+                if (signatureIds.includes(req.session.user.username)) {
+                    isSingedAlready = true;
+                }
             }
 
             let isOwner = false;
@@ -120,7 +131,9 @@ router.get("/:_id", isLoggedIn, (req, res) => {
                     isOwner = true;
                 }
             }
+            console.log(isSingedAlready);
             res.render("single-petition", {
+                isSingedAlready,
                 petition: foundPetition,
                 isOwner,
                 updateList: allUpdates,
@@ -198,13 +211,13 @@ router.get("/:_id/sign", isLoggedIn, (req, res) => {
             console.log("RETURNED PETITION: ", returnedPetition);
             console.log("SEssion id: ", req.session);
 
-            let isAlreadySigned = false;
+            let isSigning = false;
 
             if (returnedPetition.signatures.includes(req.session.user._id)) {
-                isAlreadySigned = true;
+                isSigning = true;
             }
             res.render("single-petition", {
-                isAlreadySigned,
+                isSigning,
                 returnedPetition: returnedPetition,
             });
         })

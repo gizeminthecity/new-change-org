@@ -199,3 +199,8 @@ label {
     display: flex;
     flex-direction: column;
 }
+.return-petition-button {
+    padding: 70px;
+    text-align: center;
+    font-size: 22px;
+}
