@@ -1,20 +1,23 @@
 {{#with user}}
-<div>
- <p>Welcome <b>{{name}}</b></p>
-<img class="button-style" src="{{image}}" alt="profile pic">
-<br>   
+<div  class="container-profile">
+    <div class="container-p-image">
+        <img class="button-style profile-picture" src="{{image}}" alt="profile pic">
+        <br>   
+    </div>
+    <div class="container-bio">
+        {{#if bio}}
+        <br>
+        <p>Welcome <b>{{name}}</b></p>
+        <p><b>About me : </b>{{bio}}</p>
+        <p><b>username : </b>{{username}}</p>
+        <p><b>E-mail : </b>{{email}}</p>
+        <br>
+        <a class="button-style" href="/profile/edit">Edit your profile</a>
+        {{/if}}
+    </div> 
+</div>
+<div class="container-edit-profile">
+    <a class="button-style" href="/profile/delete">Delete Account</a>
 </div>
 
-{{#if bio}}
-<label>About Me</label>
-<p>{{bio}}</p>
-{{/if}}</a>
-
-
-<p>{{username}}</p>
-<p>{{email}}</p>
-<br>
-<br>
-<a href="/profile/edit">Edit your profile</a>
-<a href="/profile/delete">Delete Account</a>
 {{/with}}

@@ -204,3 +204,41 @@ label {
     text-align: center;
     font-size: 22px;
 }
+.container-profile {
+    display: flex;
+}
+
+.profile-picture {
+    height: 250px;
+    width: 250px;
+}
+.container-p-image {
+    padding: 100px;
+}
+.container-bio {
+    padding: 100px;
+}
+
+.container-edit-profile {
+    padding-left: 105px;
+}
+.container-signup {
+    padding: 50px;
+    text-align: center;
+}
+.container-sign {
+    padding-top: 20px;
+}
+.container-login {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 100px;
+}
+.container-login-input {
+    padding-top: 20px;
+}
+.login-button {
+    margin-left: 60px;
+    margin-top: 20px;
+}
