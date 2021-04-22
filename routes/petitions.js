@@ -54,7 +54,7 @@ router.post(
     isLoggedIn,
     parser.single("image"),
     (req, res) => {
-        const image = req.file.path;
+        const image = req.file?.path;
         const {
             name,
             subject,
@@ -70,29 +70,28 @@ router.post(
                     errorMessage: "This petition is already exist.",
                 });
             }
-        });
-
-        Petition.create({
-            name,
-            subject,
-            description,
-            deadline,
-            location,
-            signatureTarget,
-            owner: req.session.user._id,
-            signatures: [req.session.user._id],
-            image,
-        })
-            .then((createdPetition) => {
-                // console.log("createdPetition: ", createdPetition);
-                res.redirect(`/petitions/${createdPetition._id}`);
+            Petition.create({
+                name,
+                subject,
+                description,
+                deadline,
+                location,
+                signatureTarget,
+                owner: req.session.user._id,
+                signatures: [req.session.user._id],
+                image,
             })
-            .catch((err) => {
-                console.log(err);
-                res.render("start-petition", {
-                    errorMessage: "Something went wrong",
+                .then((createdPetition) => {
+                    // console.log("createdPetition: ", createdPetition);
+                    res.redirect(`/petitions/${createdPetition._id}`);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    res.render("start-petition", {
+                        errorMessage: "Something went wrong",
+                    });
                 });
-            });
+        });
     }
 );
 
@@ -114,12 +113,12 @@ router.get("/:_id", isLoggedIn, (req, res) => {
             let signatureIdsArray = foundPetition.signatures;
 
             const signatureIds = signatureIdsArray.map((el) => el.username);
-            // console.log("SIGNATURE ID ARRAY", signatureIds);
+            console.log("SIGNATURE USERNAME ARRAY", signatureIds);
 
-            let isSingedAlready = false;
+            let isSignedAlready;
             if (req.session.user) {
                 if (signatureIds.includes(req.session.user.username)) {
-                    isSingedAlready = true;
+                    isSignedAlready = true;
                 }
             }
 
@@ -131,9 +130,9 @@ router.get("/:_id", isLoggedIn, (req, res) => {
                     isOwner = true;
                 }
             }
-            // console.log(isSingedAlready);
+            console.log(isSignedAlready);
             res.render("single-petition", {
-                isSingedAlready,
+                isSignedAlready,
                 petition: foundPetition,
                 isOwner,
                 updateList: allUpdates,

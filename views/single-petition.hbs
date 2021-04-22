@@ -12,10 +12,10 @@
         <h2>{{this.name}}</h3>
         <p>{{this.description}}</p>
         <p>Signatures: {{this.signatures.length}}</p>
-        {{#if isSignedAlready}}
-          <a class="button-style sign-button" href="/petitions/{{this._id}}/sign">SIGN</a> 
+        {{#if ../isSignedAlready}}
+          <p>You signed this petition already</p> 
         {{else}}
-          <p>You signed this petition already</p>
+          <a class="button-style sign-button" href="/petitions/{{this._id}}/sign">SIGN</a>
         {{/if}}  
       </div>
     </div>

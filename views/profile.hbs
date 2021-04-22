@@ -1,7 +1,10 @@
 {{#with user}}
-<h1>Welcome {{name}}</h1>
-<img src="../public/images/favicon.ico" alt="profile pic">
-<br>
+<div>
+ <p>Welcome <b>{{name}}</b></p>
+<img class="button-style" src="{{this.image}}" alt="profile pic">
+<br>   
+</div>
+
 {{#if bio}}
 <label>About Me</label>
 <p>{{bio}}</p>
