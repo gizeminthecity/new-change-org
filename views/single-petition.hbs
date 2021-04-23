@@ -9,27 +9,44 @@
       </div>
     
       <div class="single-petition-info">
-        <p style="font-size: 20px;"><b>{{this.name}}</b> created by <b>{{this.owner.name}}</b></p><br>
-        <p>{{this.description}}</p>
-        <p><b>{{this.signatures.length}}</b> human being supported this petition</p>
-        <p></p><br>
-        {{#if ../isSignedAlready}}
-          <p>You signed this petition already</p>
-          
-          <a class="button-style" href="/petitions/{{this._id}}/remove">REMOVE</a>
-        {{else}}
-          <a class="button-style sign-button" href="/petitions/{{this._id}}/sign">SIGN</a>
-        {{/if}}  
+        <p style="font-size: 20px;"><b>{{this.name}}</b> created by <b>{{this.owner.name}}</b></p>
+        <p>{{this.description}}</p><br>
+        <p><b>{{this.signatures.length}}</b> human being supported this petition.</p>
+        <a href="/petitions/{{this._id}}/signed" class="support">See who else supports this cause</a><br>
+
       </div>
     </div>
   {{/with}}
    <br> 
-  {{#each updateList}}
-      <div class="updates petition-list">    
-        <p><b>{{this.title}}</b></p>
-        <p>{{this.description}}</p>
-      </div> 
-  {{/each}}
+
+    {{#with petition}}
+            {{#if ../isSignedAlready}}
+          <div class="petition-list container-signed">
+            <p>You signed this petition already.</p><br>
+            <p>Click here to remove your signature.</p>
+            <a class="button-style remove-button" href="/petitions/{{this._id}}/remove">REMOVE</a> 
+          </div>
+          
+        {{else}}
+        <div class="petition-list container-signed">
+          <p>Click here to support this cause</p>
+          <a class="button-style sign-button" href="/petitions/{{this._id}}/sign">SIGN</a>
+        </div>
+          
+        {{/if}}  
+    {{/with}}
+    <div style="margin-left: 60px;">
+      {{#if updateList}}
+        <br><br><p class="" style="padding-left: 10px;"><b>Updates</b></p>
+        {{#each updateList}}
+          <div class="updates petition-list">    
+            <p><b>{{this.title}}</b></p>
+            <p>{{this.description}}</p>
+          </div> 
+        {{/each}}
+      {{/if}}
+    </div>
+
 
 {{/unless}}
 
@@ -42,16 +59,30 @@
 </div>
 
 
-
 {{#if isSigning}}
   {{#with returnedPetition}}
-  <div class="return-petition-button" >
-    <p>Thank you for signing the petition <b>{{this.name}}</b></p>
-    <a class="button-style" href="/petitions/{{this._id}}">Return</a>
-  </div>
-    
+    <div class="return-petition-button" >
+      <p>Thank you for signing the petition <b>{{this.name}}</b></p>
+      <a class="button-style" href="/petitions/{{this._id}}">Return</a>
+    </div> 
   {{/with}}
 {{/if}}
+
+
+<div class="container-signature">
+ {{#with foundPetition}}  
+  <p> People who support <b>{{this.name}}</b> petition</p>
+  {{#each ../signatureUsernames}}
+    <li class="list">{{this}}</li>
+    {{/each}}
+    <div style="padding: 100px;">
+      <a class="button-style" href="/petitions/my-petitions">Return to Your Petitions</a>
+    </div> 
+  {{/with}}
+</div>
+
+
+ 
 
 
 

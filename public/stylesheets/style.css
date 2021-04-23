@@ -58,6 +58,11 @@ h1 {
     font-size: 16px;
 }
 
+.my-petitions-box {
+    border: 1px solid #718b7e;
+    box-shadow: 5px 5px 2px 1px #718b7e;
+    padding: 50px;
+}
 .petition-list {
     border: 1px solid #718b7e;
     box-shadow: 5px 5px 2px 1px #718b7e;
@@ -82,6 +87,7 @@ h1 {
 .main-container-list {
     display: flex;
     justify-content: center;
+    font-size: 14px;
 }
 #petition-start-button {
     color: #718b7e;
@@ -94,7 +100,8 @@ h1 {
 
 .start-petition {
     text-align: center;
-    margin-top: 30px;
+    margin-top: 70px;
+    padding-bottom: 100px;
 }
 input,
 select,
@@ -119,7 +126,7 @@ label {
 }
 
 .container-my-petitions {
-    margin-top: 50px;
+    margin-top: 100px;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -132,6 +139,7 @@ label {
     flex-direction: row;
     justify-content: space-evenly;
 }
+
 .my-petitions-list {
     padding-top: 10px;
     font-style: italic;
@@ -194,6 +202,7 @@ label {
 
 .container-update {
     padding-bottom: 100px;
+    margin-left: 60px;
 }
 
 .updates {
@@ -223,6 +232,30 @@ label {
 .container-edit-profile {
     padding-left: 105px;
 }
+
+.container-edit-profile > a {
+    border: 1px solid #718b7e;
+    box-shadow: 5px 5px 2px 1px #718b7e;
+    padding: 10px;
+    padding-right: 20px;
+    display: flex;
+    flex-direction: row;
+    width: 110px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+.btn-style {
+    border: 1px solid #718b7e;
+    box-shadow: 5px 5px 2px 1px #718b7e;
+    padding: 10px;
+    padding-right: 20px;
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
 .container-signup {
     padding: 50px;
     text-align: center;
@@ -246,5 +279,39 @@ label {
 
 .container-remove {
     padding: 50px;
+    text-align: center;
+}
+
+.support {
+    text-decoration: underline;
+}
+.container-signed {
+    display: flex;
+    flex-direction: column;
+    margin-left: 60px;
+}
+.container-signed > a {
+    width: fit-content;
+}
+.remove-button {
+    width: fit-content;
+}
+
+.signature-list > li {
+    padding: 5px;
+}
+
+.container-signature > p {
+    text-decoration: underline;
+    margin-bottom: 30px;
+}
+.list {
+    list-style: none;
+    font-style: italic;
+    text-align: center;
+    padding: 10px;
+}
+
+.container-signature {
     text-align: center;
 }

@@ -22,11 +22,11 @@
             </div>        
          </div>
          <div class="navbar-right-loggedin"> 
-            <div style="padding-right: 13px;"><a href="/petitions">All Petitions</a></div>
+               <div style="padding-right: 13px;"><a href="/profile">Profile <b>{{this.user.name}}</b></a></div>
+            <div style="padding-right: 13px;"><a href="/petitions">Browse</a></div>
             <div style="padding-right: 13px;"><a href="/petitions/start-petition">Start Petition</a></div>     
             <div style="padding-right: 13px;"><a href="/petitions/my-petitions">My Petitions</a></div>
-            <div style="padding-right: 13px;"><a href="/profile">Profile</a></div>
-            <div style="padding-right: 13px;"><a href="/auth/logout"><b>{{this.user.name}}</b> Logout</a></div>
+            <div style="padding-right: 13px;"><a href="/auth/logout">Log Out</a></div>
          </div> 
       </nav>
       {{else}}

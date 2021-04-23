@@ -1,5 +1,5 @@
 
-<p class="heading-list">THE LIST OF PETITIONS</p>
+<p class="heading-list">DISCOVER PETITIONS</p>
 
 {{#each petitionList}}
 <div class="main-container-list">  
@@ -10,7 +10,8 @@
     <div class="container-description">
       <a href="/petitions/{{this._id}}"><p><b>{{this.name}}</b></p></a>
       <p>{{this.description}}</p>
-      <a href="/petitions/{{this._id}}"><p><b>SIGN</b></p></a>
+      <p><b>{{this.signatures.length}}</b> of <b>{{this.signatureTarget}}</b> signed.</p>
+      <a class="" style="text-decoration: underline;" href="/petitions/{{this._id}}"><p><b>Read more</b></p></a>
     </div> 
   </div>
 </div>
