@@ -9,12 +9,13 @@
       </div>
     
       <div class="single-petition-info">
-        <h2>{{this.name}}</h3>
+        <p style="font-size: 20px;"><b>{{this.name}}</b> created by <b>{{this.owner.name}}</b></p><br>
         <p>{{this.description}}</p>
-        <p>Signatures: {{this.signatures.length}}</p>
+        <p><b>{{this.signatures.length}}</b> human being supported this petition</p>
+        <p></p><br>
         {{#if ../isSignedAlready}}
           <p>You signed this petition already</p>
-          <br>
+          
           <a class="button-style" href="/petitions/{{this._id}}/remove">REMOVE</a>
         {{else}}
           <a class="button-style sign-button" href="/petitions/{{this._id}}/sign">SIGN</a>

@@ -186,6 +186,7 @@ label {
 #single-pet-img {
     width: 300px;
     height: 300px;
+    margin: 15px;
 }
 
 /* .delete-button {
