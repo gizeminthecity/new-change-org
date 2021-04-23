@@ -9,13 +9,19 @@ body {
     margin: 0;
     height: 100%;
     background-color: #ddd4cb;
+    border-top: 0;
 }
-
+main {
+    flex: 1;
+}
 body {
     font-family: Roboto;
     font-size: 15px;
     line-height: 1.5em;
     font-weight: 300;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 a {
     color: black;
@@ -39,6 +45,9 @@ a {
     padding: 20px;
     flex-direction: row;
     justify-content: space-between;
+}
+.footer {
+    background-color: #718b7e;
 }
 .navbar-right {
     display: flex;

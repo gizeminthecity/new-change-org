@@ -15,8 +15,6 @@ router.get("/my-petitions", isLoggedIn, (req, res) => {
             ],
         })
             .then((signedPetitions) => {
-                // console.log("owner: ", myPetitions);
-                // console.log("signedPetitions: ", signedPetitions);
                 res.render("my-petitions", {
                     owner: myPetitions,
                     signatures: signedPetitions,
@@ -31,7 +29,6 @@ router.get("/my-petitions", isLoggedIn, (req, res) => {
 router.get("/", (req, res) => {
     Petition.find().then((allPetitions) => {
         res.render("petitions", { petitionList: allPetitions });
-        // console.log("petitionlist:", allPetitions);
     });
 });
 
@@ -212,12 +209,10 @@ router.get("/:_id/remove", isLoggedIn, (req, res) => {
         { new: true }
     )
         .then((removedSignature) => {
-            // console.log("foundPetition: ", removedSignature);
             let isRemoved = false;
 
             if (!removedSignature.signatures.includes(req.session.user._id)) {
                 isRemoved = true;
-                // console.log(isRemoved);
             }
             res.render("single-petition", { isRemoved });
         })
@@ -228,12 +223,10 @@ router.get("/:_id/signed", isLoggedIn, (req, res) => {
     Petition.findById(req.params._id)
         .populate("signatures")
         .then((foundPetition) => {
-            console.log("foundPetition: ", foundPetition);
             let signatureIdsArray = foundPetition.signatures;
             const signatureUsernames = signatureIdsArray.map(
                 (el) => el.username
             );
-            console.log("Usernames: ", signatureUsernames);
 
             res.render("single-petition", {
                 foundPetition: foundPetition,
