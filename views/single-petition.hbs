@@ -63,7 +63,7 @@
   {{#with returnedPetition}}
     <div class="return-petition-button" >
       <p>Thank you for signing the petition <b>{{this.name}}</b></p>
-      <a class="button-style" href="/petitions/{{this._id}}">Return</a>
+      <a class="index-button" style="font-size: 14px;" href="/petitions/{{this._id}}">Return</a>
     </div> 
   {{/with}}
 {{/if}}
@@ -76,7 +76,7 @@
     <li class="list">{{this}}</li>
     {{/each}}
     <div style="padding: 100px;">
-      <a class="button-style" href="/petitions/my-petitions">Return to Your Petitions</a>
+      <a class="index-button" href="/petitions/my-petitions">Return to your petitions</a>
     </div> 
   {{/with}}
 </div>
@@ -99,7 +99,7 @@
     <br>
     <textarea class="button-style" rows="5" cols="40" name="description" id="problem" min="30" placeholder="..."></textarea>
     <br>
-    <button type="submit">Update petition</button>
+    <button class="button-style" type="submit">Update petition</button>
     </form>
     <br>
     <div class="delete-button">

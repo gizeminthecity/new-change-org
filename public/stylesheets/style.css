@@ -113,8 +113,7 @@ h1 {
     padding-bottom: 100px;
 }
 input,
-select,
-button {
+select {
     border: 3px solid white;
     -webkit-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1),
         0 0 16px rgba(0, 0, 0, 0.1);
@@ -186,6 +185,13 @@ label {
 .index-button {
     margin-right: 10px;
     margin-left: 10px;
+    border: 1px solid #718b7e;
+    box-shadow: 5px 5px 2px 1px #718b7e;
+    padding: 5px 10px;
+    font-family: Roboto;
+    line-height: 1.5em;
+    font-weight: 300;
+    background-color: #ddd4cb;
 }
 
 .container-single-petition {
